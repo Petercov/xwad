@@ -23,6 +23,7 @@
 
 #include "wadlib.h"
 #include "goldsrc_bspfile.h"
+#include "vnImagine.h"
 
 
 extern FILE *wadhandle;
@@ -213,6 +214,34 @@ void FloodSolidPixels( RGBAColor *pTexels, int width, int height )
 RGBAColor* ResampleImage( RGBAColor *pRGB, int width, int height, int newWidth, int newHeight )
 {
 	RGBAColor *pResampled = new RGBAColor[newWidth * newHeight];
+#if 1
+	CVImage source_image;
+	CVImage resampled_image;
+
+	if (VN_FAILED(vnCreateImage(VN_IMAGE_FORMAT_R8G8B8A8,
+		width,
+		height,
+		&source_image)))
+	{
+		Error("Error: Unable to create image for resampling!");
+		return 0;
+	}
+
+	memcpy(source_image.QueryData(), (void*)pRGB, sizeof(RGBAColor)*width*height);
+
+	if (VN_FAILED(vnResizeImage(source_image,
+		VN_IMAGE_KERNEL_BILINEAR,
+		newWidth,
+		newHeight,
+		0,
+		&resampled_image)))
+	{
+		Error("Error: Unable to resample the source image!");
+		return 0;
+	}
+
+	memcpy(pResampled, resampled_image.QueryData(), sizeof(RGBAColor)*newWidth*newHeight);
+#else
 	for ( int y=0; y < newHeight; y++ )
 	{
 		float yPercent = (float)y / (newHeight - 1);
@@ -243,6 +272,7 @@ RGBAColor* ResampleImage( RGBAColor *pRGB, int width, int height, int newWidth, 
 			}
 		}
 	}
+#endif
 	return pResampled;
 }
 

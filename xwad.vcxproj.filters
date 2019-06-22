@@ -13,6 +13,9 @@
       <UniqueIdentifier>{3f98e679-c9c4-4288-95e1-27db22797aee}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Library Files">
+      <UniqueIdentifier>{62d1ce01-7dc7-4da3-a7cf-194eea572bb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="goldsrc_bspfile.h">
@@ -41,5 +44,10 @@
     <ClCompile Include="xwad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="image-resampler\Bin\Imagine.lib">
+      <Filter>Library Files</Filter>
+    </Library>
   </ItemGroup>
 </Project>
